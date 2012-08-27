@@ -17,6 +17,18 @@
 # limitations under the License.
 #
 
+
+n_nodes = search(:node, "role:cloudfoundry_nats_server")
+n_node = n_nodes.first
+  
+  node.set[:cloudfoundry_dea][:searched_data][:nats_server][:host] = n_node.ipaddress  
+  node.set[:cloudfoundry_dea][:searched_data][:nats_server][:user] = n_node.nats_server.user
+  node.set[:cloudfoundry_dea][:searched_data][:nats_server][:password] = n_node.nats_server.password
+  node.set[:cloudfoundry_dea][:searched_data][:nats_server][:port] = n_node.nats_server.port
+
+
+
+
 %w{lsof psmisc librmagick-ruby}.each do |pkg|
   package pkg
 end
