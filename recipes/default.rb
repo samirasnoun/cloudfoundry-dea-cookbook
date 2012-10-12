@@ -17,15 +17,29 @@
 # limitations under the License.
 #
 
+if Chef::Config[:solo]
+        Chef::Log.warn("This recipe uses search. Chef Solo does not support search.")
+else
 
-n_nodes = search(:node, "role:cloudfoundry_nats_server")
-n_node = n_nodes.first
+include_recipe 'cloudfoundry-common'
   
-  node.set[:cloudfoundry_dea][:searched_data][:nats_server][:host] = n_node.ipaddress  
-  node.set[:cloudfoundry_dea][:searched_data][:nats_server][:user] = n_node.nats_server.user
-  node.set[:cloudfoundry_dea][:searched_data][:nats_server][:password] = n_node.nats_server.password
-  node.set[:cloudfoundry_dea][:searched_data][:nats_server][:port] = n_node.nats_server.port
+   cf_id_node = node['cloudfoundry_dea']['cf_session']['cf_id']
+   n_nodes = search(:node, "role:cloudfoundry_nats_server AND cf_id:#{cf_id_node}" )
 
+
+   k = n_nodes.first
+#   Chef::Log.warn(" =================================> k = " + k.first.ipaddress +  "=======================>")
+          	node.set['cloudfoundry_dea']['searched_data']['nats_server']['host'] = k['ipaddress']
+  		node.set['cloudfoundry_dea']['searched_data']['nats_server']['user'] = k['nats_server']['user']
+  		node.set['cloudfoundry_dea']['searched_data']['nats_server']['password'] = k['nats_server']['password']
+  		node.set['cloudfoundry_dea']['searched_data']['nats_server']['port'] = k['nats_server']['port']
+      
+
+	if(node['cloudfoundry_dea']['searched_data']['nats_server']['host'] == nil ) then 
+        	Chef::Log.warn("No nats servers found for this cloud foundry session =  " + node['dea']['cf_session']['name'])
+	end 
+
+if platform?("ubuntu")
 
 
 
@@ -33,14 +47,16 @@ n_node = n_nodes.first
   package pkg
 end
 
-directory node[:cloudfoundry_dea][:base_dir] do
+directory node['cloudfoundry_dea']['base_dir'] do
   recursive true
-  owner node[:cloudfoundry_common][:user]
+  owner node['cloudfoundry_common']['user']
   mode  '0755'
 end
 
-node[:cloudfoundry_dea][:runtimes].each do |k, runtime|
-  include_recipe runtime[:cookbook]
+node['cloudfoundry_dea']['runtimes'].each do |k, runtime|
+  include_recipe runtime['cookbook']
 end
-
+end
 cloudfoundry_component "dea"
+
+end 
