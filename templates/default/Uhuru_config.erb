@@ -1,0 +1,10 @@
+<uhuru>
+  <dea baseDir="C:\Droplets" localRoute="<%= node['cloudfoundry_dea']['searched_data']['cloudfoundry_cloud_controller']['ip']%>" filerPort="<%=node['cloudfoundry_dea']['filter_port']%>"
+    statusPort="0" heartBeatInterval="10000" messageBus="nats://<%= node['cloudfoundry_dea']['searched_data']['nats_server']['user'] %>:<%= node['cloudfoundry_dea']['searched_data']['nats_server']['password'] %>@<%= node['cloudfoundry_dea']['searched_data']['nats_server']['host'] %>:<%= node['cloudfoundry_dea']['searched_data']['nats_server']['port'] %>/"
+    multiTenant="true" maxMemory="4096" secure="true" enforceUlimit="true"
+    forceHttpSharing="false">
+    <runtimes>
+      <runtime name="iis" executable="iisver.cmd" version="0x7" versionFlag="" />
+    </runtimes>
+  </dea>
+</uhuru>

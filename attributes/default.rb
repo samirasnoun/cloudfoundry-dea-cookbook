@@ -41,5 +41,9 @@ default['cloudfoundry_dea']['searched_data']['nats_server']['host']=''
 default['cloudfoundry_dea']['searched_data']['nats_server']['user']=''
 default['cloudfoundry_dea']['searched_data']['nats_server']['password']=''
 default['cloudfoundry_dea']['searched_data']['nats_server']['port']=''
+default['cloudfoundry_dea']['searched_data']['cloudfoundry_cloud_controller']['ip']=''
 default['cloudfoundry_dea']['cf_session']['cf_id'] = '1'
 default['cloudfoundry_dea']['cf_session']['name'] = ''
+
+
+

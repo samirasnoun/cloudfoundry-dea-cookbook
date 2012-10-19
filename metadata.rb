@@ -3,9 +3,9 @@ maintainer_email "cashion@gmail.com"
 license          "Apache 2.0"
 description      "Installs/Configures cloudfoundry-dea"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.0.6"
+version          "0.0.7"
 
-%w{ ubuntu }.each do |os|
+%w{ ubuntu windows }.each do |os|
   supports os
 end
 
