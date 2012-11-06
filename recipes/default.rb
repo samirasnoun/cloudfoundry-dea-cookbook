@@ -76,7 +76,7 @@ else
        while cc_nodes.count < 1 
         Chef::Log.warn("Waiting for controller .... I am sleeping 7 sec")
         sleep 7
-        cc_nodes = search(:node, "role:cloudfoundry_nats_server AND cf_id:#{cf_id_node}")        
+        cc_nodes = search(:node, "role:cloudfoundry_controller AND cf_id:#{cf_id_node}")        
        end
  
         cc_node = cc_nodes.first
